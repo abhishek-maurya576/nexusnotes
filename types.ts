@@ -55,6 +55,14 @@ export interface QuizResult {
   userAnswers: number[]; // Array of indices selected by user
 }
 
+export interface Draft {
+  id: string;
+  title: string;
+  type: 'cleanup' | 'essay' | 'study_guide' | 'summary' | 'email';
+  content: string;
+  createdAt: number;
+}
+
 export interface Notebook {
   id: string;
   title: string;
@@ -64,6 +72,7 @@ export interface Notebook {
   flashcardSets?: FlashcardSet[];
   quizzes?: Quiz[];
   quizResults?: QuizResult[];
+  drafts?: Draft[];
   createdAt: number;
 }
 

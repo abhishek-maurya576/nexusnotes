@@ -243,7 +243,6 @@ export const generateQuiz = async (content: string, numQuestions: number): Promi
 
     if (response.text) {
       const data = JSON.parse(response.text);
-      // Ensure IDs are present (Gemini might not generate them)
       data.questions = data.questions.map((q: any) => ({
         ...q,
         id: Math.random().toString(36).substring(7)
@@ -254,5 +253,50 @@ export const generateQuiz = async (content: string, numQuestions: number): Promi
   } catch (error) {
     console.error("Quiz Gen Error", error);
     throw error;
+  }
+};
+
+export const transformContent = async (
+  content: string, 
+  format: 'cleanup' | 'essay' | 'study_guide' | 'summary' | 'email'
+): Promise<string> => {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  
+  let instruction = "";
+  let model = "gemini-3-flash-preview";
+
+  switch (format) {
+    case 'cleanup':
+      instruction = "Reorganize the following messy notes into a clean, structured hierarchy with bullet points and headers. Fix grammar and clarity.";
+      break;
+    case 'essay':
+      instruction = "Create a comprehensive essay outline based on these notes. Include a thesis statement, topic sentences for body paragraphs, and a conclusion summary.";
+      model = "gemini-3-pro-preview"; // Use stronger reasoning for structure
+      break;
+    case 'study_guide':
+      instruction = "Convert this content into a study guide. Identify key definitions, important dates, and core concepts. Create a 'Quick Review' section.";
+      break;
+    case 'summary':
+      instruction = "Write a high-level executive summary of this content (approx 200 words).";
+      break;
+    case 'email':
+      instruction = "Draft a professional email summarizing these findings to a professor or colleague.";
+      break;
+  }
+
+  try {
+    const response = await ai.models.generateContent({
+      model: model,
+      contents: `
+        TASK: ${instruction}
+        
+        INPUT TEXT:
+        ${content.substring(0, 30000)}
+      `
+    });
+    return response.text || "Failed to transform content.";
+  } catch (e) {
+    console.error("Transformation Error", e);
+    return "Error during transformation.";
   }
 };

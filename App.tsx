@@ -4,11 +4,12 @@ import Workspace from './components/Workspace';
 import InfographicView from './components/InfographicView';
 import FlashcardView from './components/FlashcardView';
 import QuizView from './components/QuizView';
+import DraftingView from './components/DraftingView';
 import { Notebook } from './types';
 import { backendRouteSnippet } from './services/backendStub';
 
 const App: React.FC = () => {
-  const [view, setView] = useState<'dashboard' | 'workspace' | 'infographic' | 'flashcards' | 'quiz'>('dashboard');
+  const [view, setView] = useState<'dashboard' | 'workspace' | 'infographic' | 'flashcards' | 'quiz' | 'drafting'>('dashboard');
   
   // Theme State
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
@@ -75,6 +76,7 @@ const App: React.FC = () => {
       flashcardSets: [],
       quizzes: [],
       quizResults: [],
+      drafts: [],
       createdAt: Date.now(),
     };
     setNotebooks(prev => [newNotebook, ...prev]);
@@ -122,6 +124,7 @@ const App: React.FC = () => {
           onNavigateToInfographic={() => setView('infographic')}
           onNavigateToFlashcards={() => setView('flashcards')}
           onNavigateToQuiz={() => setView('quiz')}
+          onNavigateToDrafting={() => setView('drafting')}
           isDarkMode={isDarkMode}
           onToggleTheme={toggleTheme}
         />
@@ -149,6 +152,16 @@ const App: React.FC = () => {
 
       {view === 'quiz' && currentNotebook && (
         <QuizView
+          notebook={currentNotebook}
+          onUpdateNotebook={handleUpdateNotebook}
+          onBack={() => setView('workspace')}
+          isDarkMode={isDarkMode}
+          onToggleTheme={toggleTheme}
+        />
+      )}
+
+      {view === 'drafting' && currentNotebook && (
+        <DraftingView
           notebook={currentNotebook}
           onUpdateNotebook={handleUpdateNotebook}
           onBack={() => setView('workspace')}

@@ -12,11 +12,12 @@ interface WorkspaceProps {
   onNavigateToInfographic: () => void;
   onNavigateToFlashcards: () => void;
   onNavigateToQuiz: () => void;
+  onNavigateToDrafting: () => void;
   isDarkMode: boolean;
   onToggleTheme: () => void;
 }
 
-const Workspace: React.FC<WorkspaceProps> = ({ notebook, onUpdateNotebook, onBack, onNavigateToInfographic, onNavigateToFlashcards, onNavigateToQuiz, isDarkMode, onToggleTheme }) => {
+const Workspace: React.FC<WorkspaceProps> = ({ notebook, onUpdateNotebook, onBack, onNavigateToInfographic, onNavigateToFlashcards, onNavigateToQuiz, onNavigateToDrafting, isDarkMode, onToggleTheme }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isTyping, setIsTyping] = useState(false);
 
@@ -89,6 +90,20 @@ const Workspace: React.FC<WorkspaceProps> = ({ notebook, onUpdateNotebook, onBac
         </div>
         
         <div className="flex items-center gap-4">
+           <button
+             onClick={onNavigateToDrafting}
+             className="group flex items-center gap-2 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-pink-700 dark:hover:text-pink-400 bg-white/30 dark:bg-white/5 hover:bg-white/60 dark:hover:bg-white/10 rounded-xl transition-all border border-white/40 dark:border-white/10 shadow-sm"
+           >
+             <div className="p-1 rounded bg-pink-100 dark:bg-pink-900/50 group-hover:bg-pink-200 dark:group-hover:bg-pink-800 transition-colors">
+               <svg className="w-3.5 h-3.5 text-pink-600 dark:text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+               </svg>
+             </div>
+             Magic Drafter
+           </button>
+
+           <div className="h-6 w-px bg-white/40 dark:bg-white/10 mx-1"></div>
+
            <button
              onClick={onNavigateToQuiz}
              className="group flex items-center gap-2 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-200 hover:text-purple-700 dark:hover:text-purple-400 bg-white/30 dark:bg-white/5 hover:bg-white/60 dark:hover:bg-white/10 rounded-xl transition-all border border-white/40 dark:border-white/10 shadow-sm"

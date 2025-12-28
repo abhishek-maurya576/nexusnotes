@@ -25,7 +25,7 @@ const Dashboard: React.FC<DashboardProps> = ({ notebooks, onCreateNotebook, onSe
           </div>
           <div>
             <h1 className="text-3xl font-bold text-slate-800 dark:text-white tracking-tight drop-shadow-sm">NexusNotes</h1>
-            <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Liquid Intelligence Workspace</p>
+            <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">Convert messy inputs into usable academic outputs.</p>
           </div>
         </div>
         
