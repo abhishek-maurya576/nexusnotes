@@ -1,0 +1,5 @@
+{
+  "name": "NexusNotes",
+  "description": "A NotebookLM clone using Gemini 2.5 and 3.0. Upload documents, chat with them using deep context, and generate notes.",
+  "requestFramePermissions": []
+}
